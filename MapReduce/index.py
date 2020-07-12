@@ -1,5 +1,6 @@
 from functools import reduce
 import re
+# %time
 
 f = open("Shakespeare.txt", "r")
 
@@ -24,10 +25,8 @@ for w in range(0, len(wordList)):
 
 # myList = list( map( lambda l : l.lower(), myBigData) )
 
-# # print(myList[0], " ")
+# # print(myList)
 
 # noDuplicateList = list( dict.fromkeys( myList)) 
 
-# mapping = list( map( lambda e: e == ,myBigData))
-
-# sum = reduce( lambda )
+# mapping = list( map( lambda e: (e, 1) ,myBigData))

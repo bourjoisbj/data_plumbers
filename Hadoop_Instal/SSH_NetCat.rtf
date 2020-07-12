@@ -1,0 +1,35 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2512
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 \
+#### CREATE A CONNECTION USING SSH\
+sudo ssh start \
+ssh-keygen\
+\
+# On machine 1,\
+user@ipaddressMachine2\
+nc localhost <Port>\
+\
+#On machine 2\
+nc -l <Port>\
+\
+# To end connection\
+sudo service ssh stop\
+\
+\
+#### CREATE A CONNECTION USING NETCAT\
+# 9600 is the port we will be using\
+# Get the IP address for both devices by command\
+ip address or ip add or ip a\
+\
+# Replace the ip address by localhost in the syntaxes below\
+\
+# Open the listener connection (-l: listener)\
+nc localhost 9600 -l\
+\
+# Open the sender connection\
+nc localhost 9600}
