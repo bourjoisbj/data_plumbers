@@ -14,15 +14,12 @@ for w in myCleanList:
     wordList.append(w)
 
 # Mapping the list 
-# myList = list( map( lambda l :(l, 1), wordList) )
-# result = list( map( lambda l :(l, 1), wordList) )
-
-# noDuplicateList = list( dict.fromkeys( myList)) 
+myList = list( map( lambda l :(l, 1), wordList) )
 
 # Reducing the list
-# result = reduce( lambda x, y : if )
+result = reduce( lambda (x,y) : if x == , myList)
 
 # Output each word with its count
 # for w in result:
-#     print(first[w], second[w])
+print(tuple(result))
 
