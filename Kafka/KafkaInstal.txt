@@ -1,0 +1,76 @@
+
+### APACHE KAFKA
+
+## Download KAFKA
+Sudo apt-get update
+cd opt
+wget https://archive.apache.org/dist/kafka/2.0.0/kafka_2.12-2.0.0.tgz
+tar -zxvf kafka_2.12-2.0.0.tgz
+rm kafka_2.12-2.0.0.tgz
+Cd
+
+# Edit .bash_profile
+sudo gedit .bash_profile
+
+# Type or paste the following in the file and save 
+## KAFKA HOME 
+export KAFKA_HOME=/home/fieldengineer/opt/kafka_2.12-2.0.0
+export PATH=$PATH:$KAFKA_HOME/bin
+
+# Source for installation
+source .bash_profile
+
+
+## CONFIGURATION
+# Configure the file server.properties
+cd opt/kafka_2.12-2.0.0/config
+cp server.properties server1.properties
+
+# In Server Basics, have the following
+broker.id = 1
+
+# In Socket Server Settings
+listeners=PLAINTEXT://:9099
+
+
+##  START APACHE KAFKA
+
+# First start ZOOKEEPER
+zookeper-server-start.sh /home/opt/$KAFKA_HOME/config.zookeeper.properties
+
+# Run ZOOKEEPER at daemon
+zookeper-server-start.sh -daemon /home/opt/$KAFKA_HOME/config.zookeeper.properties
+
+# Stop ZOOKEEPER
+zookeeper-server-stop.sh
+
+# If you have to kill it
+# Do jps to get the port number
+Kill -9 -<Port Number>
+
+# Start KAFKA once ZOOKEEPER is running
+kafka-server-start.sh /home/fieldemploye/opt/kafka_2.12-2.0.0/config/server1.properties
+
+# Create a topic
+kafka-topic.sh --create --bootstrap-server localhost:9099 --replication-factor 2 --partitions 1 --topic kafkatest1
+
+
+kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic test
+
+** zookeeper runs in 2181 by default
+
+https://stackoverflow.com/questions/55494988/why-is-kafka-not-creating-a-topic-bootstrap-server-is-not-a-recognized-option/55495032
+
+# Describe the topic 
+kafka-topics.sh --describe --zookeeper localhost:2181 --topic kafkaTest
+
+# Create a producer 
+kafka-console-producer.sh --broker-list localhost:9099 --topic kafkatest
+
+# Create a consumer 
+kafka-consoloe-consumer.sh --bootstrap-server localhot:9099 --topic kafkatest
+
+# Initialize a consumer that reads from previous messages
+kafka-console-consumer.sh --bootstrap-server localhost:9099 --topic kafkatest --from-beginning 
+
+# We can use --offset 10 instead of beginning to read from
