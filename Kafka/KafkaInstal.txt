@@ -52,14 +52,11 @@ Kill -9 -<Port Number>
 kafka-server-start.sh /home/fieldemploye/opt/kafka_2.12-2.0.0/config/server1.properties
 
 # Create a topic
-kafka-topic.sh --create --bootstrap-server localhost:9099 --replication-factor 2 --partitions 1 --topic kafkatest1
-
+kafka-topic.sh --create --bootstrap-server localhost:9099 --replication-factor 1 --partitions 1 --topic kafkatest1
 
 kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic test
 
-** zookeeper runs in 2181 by default
-
-https://stackoverflow.com/questions/55494988/why-is-kafka-not-creating-a-topic-bootstrap-server-is-not-a-recognized-option/55495032
+## By default Zookeeper runs in 2181 
 
 # Describe the topic 
 kafka-topics.sh --describe --zookeeper localhost:2181 --topic kafkaTest
