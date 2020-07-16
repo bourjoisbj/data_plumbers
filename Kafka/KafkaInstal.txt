@@ -2,6 +2,7 @@
 ### APACHE KAFKA
 
 ## Download KAFKA
+
 Sudo apt-get update
 cd opt
 wget https://archive.apache.org/dist/kafka/2.0.0/kafka_2.12-2.0.0.tgz
@@ -21,7 +22,9 @@ export PATH=$PATH:$KAFKA_HOME/bin
 source .bash_profile
 
 
+
 ## CONFIGURATION
+
 # Configure the file server.properties
 cd opt/kafka_2.12-2.0.0/config
 cp server.properties server1.properties
@@ -31,6 +34,7 @@ broker.id = 1
 
 # In Socket Server Settings
 listeners=PLAINTEXT://:9099
+
 
 
 ##  START APACHE KAFKA
@@ -51,6 +55,9 @@ Kill -9 -<Port Number>
 # Start KAFKA once ZOOKEEPER is running
 kafka-server-start.sh /home/fieldemploye/opt/kafka_2.12-2.0.0/config/server1.properties
 
+# Run KAFKA in daemon mode
+kafka-server-start.sh -daemon /home/fieldemploye/opt/kafka_2.12-2.0.0/config/server1.properties
+
 # Create a topic
 kafka-topic.sh --create --bootstrap-server localhost:9099 --replication-factor 1 --partitions 1 --topic kafkatest1
 
@@ -58,7 +65,7 @@ kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --par
 
 ## By default Zookeeper runs in 2181 
 
-# Describe the topic 
+# Describe the topic to check that the topic is actually created
 kafka-topics.sh --describe --zookeeper localhost:2181 --topic kafkaTest
 
 # Create a producer 
@@ -71,3 +78,25 @@ kafka-consoloe-consumer.sh --bootstrap-server localhot:9099 --topic kafkatest
 kafka-console-consumer.sh --bootstrap-server localhost:9099 --topic kafkatest --from-beginning 
 
 # We can use --offset 10 instead of beginning to read from
+
+# Now we can send test from producer to consumer
+
+
+
+##### SENDING A FILE FROM PRODUCER TO CONSUMER
+
+## Install Kafka Python if needed
+sudo apt install python3-pip
+sudo apt upgrade
+pip3 install Kafka-python
+
+## When file is in mode read only after being open with sudo edit, do the following
+sudo chmod 755 filename 
+
+## Run python code for producer and consumer
+python3 <Path of the producer python program>
+python3 <Path of the consumer python program>
+
+# Specify the file we are sending in the producer code and the receiver in the consumer code.
+
+
