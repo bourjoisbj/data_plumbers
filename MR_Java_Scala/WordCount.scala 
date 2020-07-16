@@ -1,0 +1,19 @@
+import scala.io.Source
+import scala.collection.immutable.ListMap
+
+object WordCount extends App{
+  println("Hello Mouka")
+
+  val list = List("test test1 test2 test3 test2 test1 test")
+  val wordList = list.flatMap(w => w.split(" "))
+  val mapList = wordList.map(w => (w,1))
+//  val res = mapList.reduce((a,b) => (a._1 = b._1, a._2 + b._2 ))
+  val groupList = mapList.groupBy(_._1)
+//  val result = groupList.map(list=>{
+//    list.reduce((a,b) => (a._1 + b._1, a._2 + b._2 ))
+//  })
+
+  val res = groupList.mapValues(list => {
+    list.map(w => x._2).sum })
+  println(res)
+}
