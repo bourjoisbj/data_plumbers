@@ -1,3 +1,4 @@
+
 ########### TWITTER DATA INGESTION USING FLUME #### CONFIGURATION #############
 
 # Ingestion is done with keyword “evanston”
@@ -61,11 +62,15 @@ gedit flume-conf-twitter.properties
 hdfs dfs -mkdir /twitter_data
 
 # Begin ingestion with flume by running the following command
-
+# Make sure hdfs is running
+start-all.sh
 flume-ng agent --name TwitterAgent --conf-file home/opt/flume-1.8.0/conf/flume-conf-twitter.properties -Dflume.root.logger=INFO,console
 
 # Check storage content
  hdfs dfs -ls /twitter_data
+# This will give you the path of the storage file 
+# The path will look like this: twitter_data/FlumeData.someNumber.tmp
 
-# Visualization
-hdfs dfs -cat /twitter_data/FlumeData.1594743323785
+# Visualization of stored data
+hdfs dfs -cat /twitter_data/FlumeData.someNumber.tmp
+
