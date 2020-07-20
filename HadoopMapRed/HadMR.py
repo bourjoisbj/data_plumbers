@@ -1,7 +1,8 @@
+from collections import Counter
 from functools import reduce
 import re
 
-f = open("test.txt", "r")
+f = open("/Users/abdelbileomon/Desktop/Enhance IT/data_plumbers/HadoopMapRed/test.txt", "r")
 
 # Save the file in lower character in a string myBigData
 myBigData = f.read().lower()
@@ -17,9 +18,15 @@ for w in myCleanList:
 myList = list( map( lambda l :(l, 1), wordList) )
 
 # Reducing the list
-result = reduce( lambda (x,y) : if x == , myList)
+counter = Counter(wordList)
+print zip(counter.keys(), counter.values())
 
-# Output each word with its count
-# for w in result:
-print(tuple(result))
+# Another alternative
+# print Counter(wordList).items()
 
+
+
+
+
+
+# noDuplicateList = list( dict.fromkeys( myList)) 

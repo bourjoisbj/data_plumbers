@@ -1,5 +1,5 @@
 
-### APACHE KAFKA
+### APACHE KAFKA ##########################################################################
 
 ## Download KAFKA
 
@@ -40,10 +40,10 @@ listeners=PLAINTEXT://:9099
 ##  START APACHE KAFKA
 
 # First start ZOOKEEPER
-zookeper-server-start.sh /home/opt/$KAFKA_HOME/config.zookeeper.properties
+zookeper-server-start.sh $KAFKA_HOME/config/zookeeper.properties
 
 # Run ZOOKEEPER at daemon
-zookeper-server-start.sh -daemon /home/opt/$KAFKA_HOME/config.zookeeper.properties
+zookeper-server-start.sh -daemon $KAFKA_HOME/config/zookeeper.properties
 
 # Stop ZOOKEEPER
 zookeeper-server-stop.sh
@@ -52,29 +52,31 @@ zookeeper-server-stop.sh
 # Do jps to get the port number
 Kill -9 -<Port Number>
 
-# Start KAFKA once ZOOKEEPER is running
+### Start KAFKA once ZOOKEEPER is running
 kafka-server-start.sh /home/fieldemploye/opt/kafka_2.12-2.0.0/config/server1.properties
 
 # Run KAFKA in daemon mode
 kafka-server-start.sh -daemon /home/fieldemploye/opt/kafka_2.12-2.0.0/config/server1.properties
 
-# Create a topic
-kafka-topic.sh --create --bootstrap-server localhost:9099 --replication-factor 1 --partitions 1 --topic kafkatest1
 
+### Create a topic
 kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic test
 
-## By default Zookeeper runs in 2181 
 
-# Describe the topic to check that the topic is actually created
+## By default Zookeeper runs in 2181 
+## Default port for consumer group 9092
+
+
+### Describe the topic to check that the topic is actually created
 kafka-topics.sh --describe --zookeeper localhost:2181 --topic kafkaTest
 
-# Create a producer 
+## Create a producer 
 kafka-console-producer.sh --broker-list localhost:9099 --topic kafkatest
 
-# Create a consumer 
-kafka-consoloe-consumer.sh --bootstrap-server localhot:9099 --topic kafkatest
+## Create a consumer 
+kafka-consoloe-consumer.sh --bootstrap-server localhost:9099 --topic kafkatest
 
-# Initialize a consumer that reads from previous messages
+## Initialize a consumer that reads from previous messages
 kafka-console-consumer.sh --bootstrap-server localhost:9099 --topic kafkatest --from-beginning 
 
 # We can use --offset 10 instead of beginning to read from
@@ -83,14 +85,14 @@ kafka-console-consumer.sh --bootstrap-server localhost:9099 --topic kafkatest --
 
 
 
-##### SENDING A FILE FROM PRODUCER TO CONSUMER
+##### SENDING A FILE FROM PRODUCER TO CONSUMER ###########################################
 
 ## Install Kafka Python if needed
 sudo apt install python3-pip
 sudo apt upgrade
 pip3 install Kafka-python
 
-## When file is in mode read only after being open with sudo edit, do the following
+## If file is in mode read only after being open with sudo edit, do the following
 sudo chmod 755 filename 
 
 ## Run python code for producer and consumer

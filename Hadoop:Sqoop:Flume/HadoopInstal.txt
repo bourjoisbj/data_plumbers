@@ -27,7 +27,7 @@
 
 
 ## Set up the Hadoop Configuration files
-    $ cd Desktop/opt
+    $ cd opt
     $ cd Hadoop/etc/hadoop
 
 
@@ -82,21 +82,6 @@
         <value>yarn</value>
         </property>
 
-        <property>
-        <name>yarn.app.mapreduce.am.env</name>
-        <value>HADOOP_MAPRED_HOME=/home/fieldemploye/opt/hadoop-3.1.3</value>
-        </property>
-
-        <property>
-        <name>mapreduce.map.env</name>
-        <value>HADOOP_MAPRED_HOME=/home/fieldemploye/opt/hadoop-3.1.3</value>
-        </property>
-
-        <property>
-        <name>mapreduce.reduce.env</name>
-        <value>HADOOP_MAPRED_HOME=/home/fieldemploye/opt/hadoop-3.1.3</value>
-        </property>
-
 
 ##  Edit yarn-site.xml
     $ sudo gedit yarn-site.xml
@@ -122,3 +107,26 @@
 ## Check status of hdfs
     $ jps
 
+
+## Do the following 2 commands to avoid permission denied on localhost
+ssh-keygen -t rsa 
+# Press Enter button a couple of times
+cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
+
+
+#######################################################
+??? To verify if it is part of mapred configuration 
+        <property>
+        <name>yarn.app.mapreduce.am.env</name>
+        <value>HADOOP_MAPRED_HOME=/home/fieldemploye/opt/hadoop-3.1.3</value>
+        </property>
+
+        <property>
+        <name>mapreduce.map.env</name>
+        <value>HADOOP_MAPRED_HOME=/home/fieldemploye/opt/hadoop-3.1.3</value>
+        </property>
+
+        <property>
+        <name>mapreduce.reduce.env</name>
+        <value>HADOOP_MAPRED_HOME=/home/fieldemploye/opt/hadoop-3.1.3</value>
+        </property>

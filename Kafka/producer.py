@@ -9,5 +9,5 @@ lineList = f.readlines()
 
 for x in range(len(line_list)):
 	producer.send('data',json.dumps(lineList[x]).encode('utf-8'))
-	sleep(1)
+	sleep(2)
 	

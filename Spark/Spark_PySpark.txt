@@ -1,0 +1,31 @@
+###### INSTALL SPARK ##########################################################
+
+cd opt
+wget https://archive.apache.org/dist/spark/spark-2.4.4/spark-2.4.4-bin-hadoop2.7.tgz
+sudo gedit .bash_profile
+
+## Type in .bash_profile file the following and save
+
+## SPARK HOME 
+export SPARK_HOME=/home/fieldengineer/opt/spark-2.4.4
+export PATH=$PATH:$SPARK_HOME/bin
+
+# Source bash_profile for installation
+source .bash_profile
+
+# Lauch spark shell
+spark-shell
+
+ 
+## SET PYSPARK #######################
+
+pip3 install pyspark 
+
+# Edit .bash_profile file 
+
+export PYSPARK_PYTHON=python3
+
+# Source bash_profile for installation
+source .bash_profile 
+
+pyspark

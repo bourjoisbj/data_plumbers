@@ -95,7 +95,6 @@ flume-ng agent -n plumber -c conf -f ~/opt/flume-1.8.0/conf/flume-conf1.properti
 
 
 
-
 ## FLUME AND NETCAT
 
  cd $FLUME_HOME

@@ -1,6 +1,6 @@
 ########### TWITTER DATA INGESTION USING FLUME #### CONFIGURATION #############
 
-# ingestion is done with keyword “evanston”
+# Ingestion is done with keyword “evanston”
 
 # Run Hadoop if it is not running yet
 start-yarn.sh
