@@ -110,7 +110,7 @@
 
 ## Do the following 2 commands to avoid permission denied on localhost
 ssh-keygen -t rsa 
-# Press Enter button a couple of times
+# Press Enter button 4 times without typing anything 
 cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
 
 
