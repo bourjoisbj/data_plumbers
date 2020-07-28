@@ -50,7 +50,7 @@ zookeeper-server-stop.sh
 
 # If you have to kill it
 # Do jps to get the port number
-Kill -9 -<Port Number>
+kill -9 -<Port Number>
 
 ### Start KAFKA once ZOOKEEPER is running
 kafka-server-start.sh /home/fieldemploye/opt/kafka_2.12-2.0.0/config/server1.properties
@@ -66,6 +66,8 @@ kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --par
 ## By default Zookeeper runs in 2181 
 ## Default port for consumer group 9092
 
+## To check the topics in Zookeeper 
+kafka-topics.sh --describe --zookeeper localhost:2181 --topic kafkaTest
 
 ### Describe the topic to check that the topic is actually created
 kafka-topics.sh --describe --zookeeper localhost:2181 --topic kafkaTest
@@ -101,4 +103,8 @@ python3 <Path of the consumer python program>
 
 # Specify the file we are sending in the producer code and the receiver in the consumer code.
 
+###########################
 
+# Install htop
+sudo apt install htop
+htop 

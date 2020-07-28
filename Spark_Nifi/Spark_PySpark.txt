@@ -13,10 +13,17 @@ export PATH=$PATH:$SPARK_HOME/bin
 # Source bash_profile for installation
 source .bash_profile
 
-# Lauch spark shell
+# Lauch scala in spark shell
 spark-shell
 
- 
+# Lauch pyspark in spark shell
+pyspark
+
+# Using spark-submit
+spark-submit <jar file> <python file> 
+spark-submit --packages org.apache.spark:spark-streaming-kafka-0-8_2.11:2.4.4 /home/fieldemploye/opt/WordCount_Pyspark.py
+
+
 ## SET PYSPARK #######################
 
 pip3 install pyspark 
@@ -28,4 +35,3 @@ export PYSPARK_PYTHON=python3
 # Source bash_profile for installation
 source .bash_profile 
 
-pyspark

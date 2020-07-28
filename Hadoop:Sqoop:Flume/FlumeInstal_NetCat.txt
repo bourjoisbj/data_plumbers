@@ -1,5 +1,5 @@
 
-## FLUME
+## FLUME #############################
 
 ## INSTALL FLUME
 
@@ -147,4 +147,4 @@ flume-ng agent -n plumber -c conf -f ~/opt/flume-1.8.0/conf/flume-conf1.properti
  nc 127.0.0.1 44444
 
 #  New file should be on hdfs dfs -ls /flumeNetcat 
-
+F

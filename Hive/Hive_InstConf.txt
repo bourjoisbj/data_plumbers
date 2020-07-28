@@ -1,0 +1,109 @@
+######## HIVE INSTALLATION AND CONFIGURATIONS ###########################################
+
+cd opt
+wget https://archive.apache.org/dist/hive/hive-2.3.5/apache-hive-2.3.5-bin.tar.gz
+tar -zxvf apache-hive-2.3.5-bin.tar.gz
+rm apache-hive-2.3.5-bin.tar.gz
+mv apache-hive-2.3.5-bin hive-2.3.5
+
+cd sudo gedit .bash_profile
+
+# Edit .bash_profile with the following texts and save
+
+## HIVE Home 
+export HIVE_HOME=/home/fieldemploye/opt/hive-2.3.5
+export PATH=$PATH:$HIVE_HOME/bin
+
+# Create and Configure file hive-env.sh in hive-2.3.5/conf
+cd opt/hive-2.8.0/conf
+cp hive-env.sh.template hive-env.sh
+sudo gedit hive-env.sh
+
+# Type the following lines and save
+export HADOOP_HOME=/home/fieldemploye/opt/hadoop-2.8.0
+export HADOOP_HEAPSIZE=512
+export HIVE_CONF_DIR=/home/fieldemploye/opt/hive-2.3.5/bin
+
+# Move hive-env.sh to the bin
+mv  hive-env.sh ~/opt/hive-2.3.5/bin/hive-env.sh
+
+# Configure file hive-site.xml in hive-2.3.5/bin
+cd opt/hive-2.3.5/bin
+sudo gedit hive-site.xml
+
+# Edit .bash_profile with the following configuration and save
+
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<configuration>
+<property>
+<name>javax.jdo.option.ConnectionURL</name>
+<value>jdbc:derby:;databaseName=/home/fieldemploye/opt/hive-2.3.5/metastore_db; create=true</value>
+<description>JDBC connect string for a JDBC metastore.</description>
+</property>
+<property>
+<name>hive.metastore.warehouse.dir</name>
+<value>/user/hive/warehouse</value>
+<description>location of default database for the warehouse</description>
+</property>
+<property>
+<name>hive.metastore.uris</name>
+<value>thrift://localhost:9083</value>
+<description>Thrift URI for the remote metastore.</description>
+</property>
+<property>
+<name>javax.jdo.option.ConnectionDriverName</name>
+<value>org.apache.derby.jdbc.EmbeddedDriver</value>
+<description>Driver class name for a JDBC metastore</description>
+</property>
+<property>
+<name>javax.jdo.PersistenceManagerFactoryClass</name>
+<value>org.datanucleus.api.jdo.JDOPersistenceManagerFactory</value>
+<description>class implementing the jdo persistence</description>
+</property>
+<property>
+<name>hive.server2.enable.doAs</name>
+<value>false</value>
+</property>
+</configuration>
+<name>javax.jdo.PersistenceManagerFactoryClass</name>
+<value>org.datanucleus.api.jdo.JDOPersistenceManagerFactory</value>
+<description>class implementing the jdo persistence</description>
+</property>
+<property>
+<name>hive.server2.enable.doAs</name>
+<value>false</value>
+</property>
+</configuration>
+
+# Change the extension of this file og4j-slf4j-impl-2.6.2.jar
+cd 
+cd opt/hive-2.3.5/lib
+mv lib/log4j-slf4j-impl-2.6.2.jar lib/log4j-slf4j-impl-2.6.2.jar.bak
+
+~/opt/hive-2.3.5/metastore_db$ pwd
+cd
+
+# Start Hadoop
+start-all.sh
+hdfs dfs -mkdir -p /user/hive/warehouse
+hdfs dfs -mkdir -p /tmp
+mkdir metastore_db
+sudo gedit hive-site.xml 
+
+# Move these files to home directory
+guava-27.0-jre.jar
+guava-14.0.1.jar
+
+# Make sure the file file "hive-site.xml" is in bin directory
+
+# Source .bash_profile for installation
+source .bash_profile
+
+# Run Hive
+schematool -initSchema -dbType derby
+hive --service metastore
+
+# Open a new window
+hive
+Show databases;

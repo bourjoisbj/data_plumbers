@@ -21,7 +21,10 @@ echo "INSTALLING JAVA"
 
 # Create a bash profile
 cd
-sudo gedit .bash_profile
+sudo touch .bash_profile
+
+# Open ,bash_profile
+open -e .bash_profile
 echo "## JAVA HOME" >> .bash_profile.sh
 echo "export JAVA_HOME=/home/fieldemploye/opt/jdk1.8.0_221" >> .bash_profile.sh
 echo "export PATH=$PATH:$JAVA_HOME/bin" >> .bash_profile.sh
@@ -31,7 +34,7 @@ echo
 echo "INSTALLING HADOOP"
 echo >> .bash_profile.sh
 echo "## HADOOP HOME" >> .bash_profile.sh
-echo "export HADOOP_HOME=/home/fieldemploye/opt/hadoop-3.1.3" >> .bash_profile.sh
+echo "export HADOOP_HOME=/home/fieldemploye/opt/hadoop-2.8.0" >> .bash_profile.sh
 echo "export HADOOP_INSTALL=$HADOOP_HOME" >> .bash_profile.sh
 echo "export HADOOP_MAPRED_HOME=$HADOOP_HOME" >> .bash_profile.sh
 echo "export HADOOP_COMMON_HOME=$HADOOP_HOME" >> .bash_profile.sh
@@ -40,8 +43,18 @@ echo "export YARN_HOME=$HADOOP_HOME" >> .bash_profile.sh
 echo "export HADOOP_COMMON_LIB_NATIVE_DIR=$HADOOP_HOME/lib/native" >> .bash_profile.sh
 echo "export PATH=$PATH:$HADOOP_HOME/sbin:$HADOOP_HOME/bin" >> .bash_profile.sh
 
+# Save & Close .bash_profile
+. .bash_profile
+source .bash_profile
+
+cd opt/hadoop-2.8.0/
+mkdir hdfs
+cd hdfs
+mkdir namenode
+mkdir datanode
+
 # Edit hadoop-env.sh
-cd opt/hadoop-3.1.3/etc/hadoop
+cd opt/hadoop-2.8.0/etc/hadoop
 sudo gedit hadoop-env.sh << EOF
 Password
 EOF
@@ -70,11 +83,11 @@ echo "<configuration>
 </property>
 <property>
   <name>dfs.name.dir</name>
-    <value>file:///home/fieldemploye/opt/hadoop-3.1.3/namenode</value>
+    <value>file:///home/fieldemploye/opt/hadoop-2.8.0/namenode</value>
 </property>
 <property>
   <name>dfs.data.dir</name>
-    <value>file:///home/fieldemploye/opt/hadoop-3.1.3/datanode</value>
+    <value>file:///home/fieldemploye/opt/hadoop-2.8.0/datanode</value>
 </property>
 </configuration>" >> hdfs-site.xml
 
@@ -98,6 +111,19 @@ echo "<configuration>
  </property>
 </configuration>" >> yarn-site.xml
 
+source .bash_profile
+
+
+ssh-keygen -t rsa
+# Press Enter button 4 times without typing anything
+cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
+
+
+## Format hdfs namenode
+hdfs namenode -format
+
+## Start all sh
+start-all.sh
 
 ## Python
 echo
@@ -113,8 +139,8 @@ wget https://www.python.org/ftp/python/3.7.5/Python-3.7.5.tgz
 tar -zxvf Python-3.7.5.tgz
 rm Python-3.7.5.tgz
 
-echo "export PHYTON_HOME=/home/fieldemploye/opt/Python-3.7.5" >> .bash_profile.sh
-echo "export PATH=$PATH:$PHYTON_HOME/bin" >> .bash_profile.sh
+echo "export PYTHON_HOME=/home/fieldemploye/opt/Python-3.7.5" >> .bash_profile.sh
+echo "export PATH=$PATH:$PYTHON_HOME/bin" >> .bash_profile.sh
 
 ## Scala
 echo
@@ -160,14 +186,3 @@ FLUSH PRIVILEGES;
 ## SBT Home
 #export SBT_HOME=/home/fieldemploye/opt/sbt
 #export PATH=$PATH:$SBT_HOME/bin
-
-source .bash_profile
-
-## Format hdfs namenode
-hdfs namenode -format
-
-## Start all sh
-start-all.sh
-
-## Check running status
-jps
