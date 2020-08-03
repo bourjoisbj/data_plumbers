@@ -80,7 +80,6 @@ sudo gedit hive-site.xml
 cd 
 cd opt/hive-2.3.5/lib
 mv lib/log4j-slf4j-impl-2.6.2.jar lib/log4j-slf4j-impl-2.6.2.jar.bak
-
 ~/opt/hive-2.3.5/metastore_db$ pwd
 cd
 
@@ -95,8 +94,6 @@ sudo gedit hive-site.xml
 guava-27.0-jre.jar
 guava-14.0.1.jar
 
-# Make sure the file file "hive-site.xml" is in bin directory
-
 # Source .bash_profile for installation
 source .bash_profile
 
@@ -107,3 +104,4 @@ hive --service metastore
 # Open a new window
 hive
 Show databases;
+Show tables;

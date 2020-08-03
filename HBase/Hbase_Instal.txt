@@ -1,0 +1,108 @@
+################### HBASE ########################
+
+# First download HBase
+cd opt
+wget http://apache.mirrors.hoobly.com/hbase/2.3.0/hbase-2.3.0-bin.tar.gz
+tar zxvf hbase-2.3.0-bin.tar.gz
+rm hbase-2.3.0-bin.tar.gz 
+
+# In bash_profile file set HBase home 
+export HBASE_HOME=/home/fieldemploye/opt/hbase-2.3.0
+export PATH=$PATH:$HBASE_HOME/bin
+
+# Source for installation
+source .bash_profile
+
+# Configure file hbase-env.sh
+cd hbase-2.3.0/conf
+sudo gedit hbase-env.sh
+    > edit line 27 
+    > export JAVA_HOME=/home/fieldemploye/opt/jdk1.8.0_221
+
+#Configure hbase-site.xml
+gedit hbase-site.xml
+   
+# Paste the following configuration in the file and save
+    >   <?xml version="1.0"?>
+        <?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+
+        <configuration>
+
+        <property>
+            <name>hbase.rootdir</name>
+            <value>hdfs://localhost:9000/hbase</value>
+        </property>
+
+        <property>
+            <name>hbase.master.port</name>
+            <value>60001</value>
+        </property>
+
+        <property>
+            <name>hbase.zookeeper.property.dataDir</name>
+            <value>/home/consultant/Desktop/opt/hbase-2.3.0/hadoop/zookeeper</value>
+        </property>
+
+        <property>
+            <name>hbase.cluster.distributed</name>
+            <value>true</value>
+        </property>
+
+        </configuration> 
+
+# Create a folder in hbase home directory
+cd $HBASE_HOME
+mkdir -m 755 hadoop
+cd hadoop
+mkdir -m 755 zookeeper
+cd zookeeper
+
+# Get the path
+pwd
+
+# Copy and paste the path in hbase-site.xml file
+/home/filedemploye/opt/hbase-2.3.0/hadoop/zookeeper
+
+# Run Hadoop if not running yet
+start-dis.sh
+Start-yarn.sh
+
+# Check the Hadoop running status
+jps
+
+# Create a folder /hbase in HDFS
+hdfs dfs -ls /
+hdfs dfs -mkdir /hbase
+
+# Stop and restart hadoop
+stop-dfs.sh
+stop-yarn.sh
+jps
+
+# Kill port if necessary
+kill -9 - "port number"
+
+# Start HBase
+# First start Hadoop
+start-yarn.sh
+start-dfs.sh
+start-hbase.sh
+
+# Check hdfs /hbase
+hdfs dfs -ls /hbase
+
+#  HDFS HBasw should contain the following files 
+    >   Found 12 items
+        drwxr-xr-x   - consultant supergroup          0 2020-07-29 20;20 /hbase/.hbck
+        drwxr-xr-x   - consultant supergroup          0 2020-07-29 20;20 /hbase/.tmp
+        drwxr-xr-x   - consultant supergroup          0 2020-07-29 20;20 /hbase/MasterData
+        drwxr-xr-x   - consultant supergroup          0 2020-07-29 20;20 /hbase/WALs
+        drwxr-xr-x   - consultant supergroup          0 2020-07-29 20;20 /hbase/archive
+        drwxr-xr-x   - consultant supergroup          0 2020-07-29 20;20 /hbase/corrupt
+        drwxr-xr-x   - consultant supergroup          0 2020-07-29 20;20 /hbase/data
+        -rw-r--r--   1 consultant supergroup         42 2020-07-29 20;20 /hbase/hbase.id
+        -rw-r--r--   1 consultant supergroup          7 2020-07-29 20;20 /hbase/hbase.version
+        drwxr-xr-x   - consultant supergroup          0 2020-07-29 20;20 /hbase/mobdir
+        drwxr-xr-x   - consultant supergroup          0 2020-07-29 20;20 /hbase/oldWALs
+        drwx--x--x   - consultant supergroup          0 2020-07-29 20;20 /hbase/staging
+

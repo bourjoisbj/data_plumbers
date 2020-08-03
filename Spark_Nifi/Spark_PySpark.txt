@@ -7,7 +7,7 @@ sudo gedit .bash_profile
 ## Type in .bash_profile file the following and save
 
 ## SPARK HOME 
-export SPARK_HOME=/home/fieldengineer/opt/spark-2.4.4
+export SPARK_HOME=/home/fieldemploye/opt/spark-2.4.4
 export PATH=$PATH:$SPARK_HOME/bin
 
 # Source bash_profile for installation
