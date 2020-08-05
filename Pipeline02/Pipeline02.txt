@@ -1,0 +1,110 @@
+Pipeline 02
+
+API --> Kafka --> Spark --> Hive
+
+#############################################################################
+
+# Start zookeeper in daemon mode
+zookeeper-server-start.sh -daemon /home/employe/opt/kafka_2.12-2.0.0/config/zookeeper.properties
+
+# Start kafka in daemon mode
+kafka-server-start.sh -daemon /home/consultant/Desktop/opt/kafka_2.12-2.0.0/config/server_twitter_spark.properties
+
+# create a Topic
+kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions --topic APIKafkaSpark
+
+# Check the list of topics
+kafka-topics.sh --list --zookeeper localhost:2181
+
+# Start Hive Metastore:
+hive --service metastore
+
+# Start Hive
+hive
+
+# Check if it is working
+show tables; 
+
+# In other to connect all the components of the pipeline together, we need 2 python codes 
+# Kafka will stream from the API and her Spark is like the consumer for Kafka 
+# Spark will stream and transforms to dataframes, then send them to Hive for queries.
+
+# Create a producer.py file that connects the API and send the message to Kafka in json format
+
+# Here is the code for the task
+producer.py
+
+from kafka import KafkaClient
+from time import sleep
+import json
+from kafka import KafkaProducer
+import requests
+from json import dumps
+import json 
+
+kafka = KafkaClient("localhost:9099")
+producer = SimpleProducer(kafka)
+
+myheaders = {
+	"x-rapidapi-host": 'edamam-edamam-nutrition-analysis.p.rapidapi.com',
+	"x-rapidapi-key": "API key",
+	"useQueryString": 'true'
+}
+
+myquery = {
+    	"ingr": "1 large apple"
+}
+
+
+# Resquest data from API
+req = requests.get('https://edamam-edamam-nutrition-analysis.p.rapidapi.com/api/nutrition-data', headers=myheaders, params=myquery )
+data = req.json()
+print(data)
+
+producer.send("APIKafkaSpark", json.dumps(t))
+
+
+
+
+1stPipeline.py
+
+from pyspark.streaming.kafka import KafkaUtils
+from pyspark.streaming import StreamingContext
+from pyspark import SparkContext
+from pyspark.sql import SparkSession
+from pyspark import sql
+from pyspark.sql import SQLContext
+import json
+
+sc = SparkContext(appName="samir")                                                                                     
+ssc = StreamingContext(sc, 5)          
+
+ks = KafkaUtils.createDirectStream(ssc, ['KafkaFood'], {'metadata.broker.list': 'localhost:9099'})   
+
+result1 = ks.map(lambda x: json.loads(x[1])).flatMap(lambda x: x['data']).map(lambda x: x['player'])
+
+result1.pprint()
+
+def handle_rdd(rdd):                                                                                                    
+    if not rdd.isEmpty():                                                                                               
+        global ss                                                                                                       
+        df = ss.createDataFrame(rdd, schema=['first_name','last_name', 'height_inches', 'weight_pounds','team_id','height_feet','position','id'])                                                
+        df.show()                                                                                                       
+        df.write.saveAsTable(name='default.nba1', format='hive', mode='append')  
+                                                                                           
+ss = SparkSession.builder.appName("samir").config("spark.sql.warehouse.dir", "/user/hive/warehouse/").config("hive.metastore.uris", "thrift://localhost:9083").enableHiveSupport().getOrCreate()                                                                                                  
+ss.sparkContext.setLogLevel('WARN') 
+                                
+result1.foreachRDD(handle_rdd) 
+
+ssc.start()                                                                                                             
+ssc.awaitTermination()
+- run the spark-submit command:
+
+spark-submit --packages org.apache.spark:spark-streaming-kafka-0-8_2.11:2.4.4 1stPipeline.py
+- run the producer to send the message to Kafka Topic:
+
+python producer.py
+
+
+

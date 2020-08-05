@@ -109,14 +109,17 @@ counts = lines.flatMap( lambda text: text.split( " " ))\
 ssc.start()
 ssc.awaitTermination()
 
+# End code
 
-# Run Spark submit with a jar corresponding jar file.
-Spark-submit 
 
 # Launch mySql remotely 
 mysql -u 'sql user' -p
 
-#
-Create database TweetTable;
+# Create database TweetTable;
 
 # Create table according to the table in the spark codes with the same fields
+
+
+# Run Spark submit with a jar corresponding jar file.
+Spark-submit 
+
