@@ -1,0 +1,41 @@
+######## INSTALL MONGODB AND SOME COMMANDS ########################################
+
+## MongoDB Installation
+## Just a single command is enough for the installation
+sudo apt-get update
+sudo apt install -y mongodb
+
+## Start mongoDB
+mongo
+
+## Examples of commands used in MongoDB 
+# To check the databases
+show dbs
+
+## To check the collections
+show collections
+
+## Ceate a collection
+db.createCollection('Employees')
+
+## Insert an element in a collection
+db.consultant.insert({first_name:"Bj",last_name:"Bourjois",age:42})
+
+## Show the whole collection for the previous example
+db.Employees.find()
+
+## Show the whole collection in a beautiful manner
+db.Employees.find().pretty()
+
+## Sort a collection by field
+# ASC = 1 --> for ascendent sort
+# DESC = -1 --> for descendent sort
+
+# Show the field age, do age:1
+# Not showing the field, do age:0
+# Example 
+db.Employees.find({},{first_name:1, age:1}).sort({age:1})
+
+## Update a collection by adding a new field 'gender' to the whole collection
+db.Employees.update({},{$set: {"gender": "male"}}, {multi: true} )
+

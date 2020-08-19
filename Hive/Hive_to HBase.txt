@@ -1,0 +1,41 @@
+######## HIVE TO HBASE ###########################################
+
+# Load the tables employee and hr from examples 
+# We want the tables from Hive to HBase
+
+# First create a table
+create 'employee','Personal_Information','Professional_Information'
+
+# Populate the Table
+put '<HBase_table_name>', 'row_key', '<colfamily:colname>', '<value>'
+
+put 'employee','1','Personal_Information:name','Bj'
+put 'employee','1','Personal_Information:phone','555 111 7777'
+put 'employee','1','Personal_Information:city','Chicago'
+
+put 'employee','1','Professional_Information:id','243'
+put 'employee','1','Professional_Information:email','bj@email.com'
+put 'employee','1','Professional_Information:department','HR'
+
+
+## Hive to Hbase.
+# First, create a table in Hive
+# Choose the key, you can use an existing ID as a key
+
+# Create a HBase table to load the data
+CREATE TABLE table name=
+  (
+    first_name STRING,
+    height_feet STRING,
+    height_inches STRING,
+    team_id STRING,
+    last_name STRING,
+    position STRING,
+    id STRING,
+    weight_pounds STRING
+  )
+STORED BY 'org.apache.hadoop.hive.hbase.HBaseStorageHandler'
+WITH SERDEPROPERTIES ("hbase.columns.mapping" = "players:first_name,players:height_feet,players:height_inches,:key,players:last_name,players:position,players:id,players:weight_pounds")
+TBLPROPERTIES ("hbase.table.name" = "nba_hbase", "hbase.mapred.output.outputtable" = "nba_hbase");
+
+INSERT INTO TABLE 

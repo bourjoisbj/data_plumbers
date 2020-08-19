@@ -24,14 +24,11 @@ export HADOOP_HOME=/home/fieldemploye/opt/hadoop-2.8.0
 export HADOOP_HEAPSIZE=512
 export HIVE_CONF_DIR=/home/fieldemploye/opt/hive-2.3.5/bin
 
-# Move hive-env.sh to the bin
-mv  hive-env.sh ~/opt/hive-2.3.5/bin/hive-env.sh
-
 # Configure file hive-site.xml in hive-2.3.5/bin
 cd opt/hive-2.3.5/bin
 sudo gedit hive-site.xml
 
-# Edit .bash_profile with the following configuration and save
+# Edit hive-site.xml with the following configuration and save
 
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
@@ -66,42 +63,35 @@ sudo gedit hive-site.xml
 <value>false</value>
 </property>
 </configuration>
-<name>javax.jdo.PersistenceManagerFactoryClass</name>
-<value>org.datanucleus.api.jdo.JDOPersistenceManagerFactory</value>
-<description>class implementing the jdo persistence</description>
-</property>
-<property>
-<name>hive.server2.enable.doAs</name>
-<value>false</value>
-</property>
-</configuration>
 
-# Change the extension of this file og4j-slf4j-impl-2.6.2.jar
+
+# Change the extension of this file og4j-slf4j-impl-2.6.2.jar in lib directory
 cd 
 cd opt/hive-2.3.5/lib
 mv lib/log4j-slf4j-impl-2.6.2.jar lib/log4j-slf4j-impl-2.6.2.jar.bak
-~/opt/hive-2.3.5/metastore_db$ pwd
 cd
 
 # Start Hadoop
-start-all.sh
+start-dfs.sh
+Start-yarn.sh
+
+# Create directories for Hive in HDFS
 hdfs dfs -mkdir -p /user/hive/warehouse
 hdfs dfs -mkdir -p /tmp
-mkdir metastore_db
-sudo gedit hive-site.xml 
 
-# Move these files to home directory
-guava-27.0-jre.jar
-guava-14.0.1.jar
+# Move this file to home directory
+mv guava-14.0.1.jar ~/guava-14.0.1.jar
 
 # Source .bash_profile for installation
 source .bash_profile
 
-# Run Hive
+# Initialize metastore and Run Hive
 schematool -initSchema -dbType derby
 hive --service metastore
 
-# Open a new window
+# Open a new terminal window and launch Hive
 hive
+
+# Do the following to check if Hive is properly working
 Show databases;
 Show tables;

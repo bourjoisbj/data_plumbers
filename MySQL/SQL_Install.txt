@@ -1,0 +1,34 @@
+############ INSTALL SQL ############
+
+# INSTALL MYSQL
+sudo apt-get update
+sudo apt install mysql-server
+
+# CONFIGURE MYSQL
+sudo mysql_secure_installation
+# Press y to accept the default of all subsequent questions
+
+# To initialize mysql, but not needed in this case, just FYI
+mysql_install_db
+# OR
+mysqld --initialize 
+
+# Adjusting User Authentication and Privileges 
+sudo mysql
+SELECT user,authentication_string,plugin,host FROM mysql.user;
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';
+FLUSH PRIVILEGES;
+
+# Confirm that root doesn't authenticate anymore using auth
+SELECT user,authentication_string,plugin,host FROM mysql.user;
+exit
+
+# Launch MySQL again ("sudo mysql" will not work anymore)
+mysql -u root -p
+CREATE USER 'Bj'@'localhost' IDENTIFIED BY 'password';
+GRANT ALL PRIVILEGES ON *.* TO 'Bj'@'localhost' WITH GRANT OPTION;
+exit
+
+## Test MySQL
+systemctl status mysql.service
+sudo mysqladmin -p -u root version
