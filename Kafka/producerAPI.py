@@ -14,7 +14,7 @@ producer = KafkaProducer(bootstrap_servers = ['localhost:9099'],
 
 headers = {
 	"x-rapidapi-host": "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com",
-	"x-rapidapi-key": "470324e088msh384fa183976ea5bp1ced01jsnbcb05ef02e91",
+	"x-rapidapi-key": "API Key",
 	"useQueryString": 'true'
 }
 
