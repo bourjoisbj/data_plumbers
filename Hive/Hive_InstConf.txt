@@ -35,7 +35,7 @@ sudo gedit hive-site.xml
 <configuration>
 <property>
 <name>javax.jdo.option.ConnectionURL</name>
-<value>jdbc:derby:;databaseName=/home/fieldemploye/opt/hive-2.3.5/metastore_db; create=true</value>
+<value>jdbc:derby:;databaseName=/home/fieldemploye/opt/hive-2.3.5/metastore_db;create=true</value>
 <description>JDBC connect string for a JDBC metastore.</description>
 </property>
 <property>
